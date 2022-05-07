@@ -23,22 +23,41 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const handleClick = event => {
+        const cellNode = event.target;
+        const x = cellNode.attributes['data-xpos'].value;
+        const y = cellNode.attributes['data-ypos'].value;
+        
+        // Register click with Business Logic
+        const clickOutcome = game.clickCell([y, x]);
+        // Update board state
+        board = game.board;
+        // Fetch cell data 
+        const cellData = board[y][x];
+        // If cell not flagged
+        if (!cellData.flagged) {
+            // If mine present, display mine symbol
+            if (cellData.mine) {
+                cellNode.innerText = '!';
+            } else { // If not, display cells number
+                cellNode.innerHTML = cellData.display;
+            }
+        }
+
+        // End game conditions
+        if (clickOutcome.gameOver) {
+            cellNodes.forEach( node => {
+                node.removeEventListener('click', handleClick);
+            })    
+            console.log("You lose!");
+        } else {
+            if (clickOutcome.gameWon) console.log("You win!");
+        }
+    }
+
     // Set on click listeners for each cell
     const cellNodes = document.querySelectorAll('.cell');
-    cellNodes.forEach(cellDisplay => {
-        cellDisplay.addEventListener('click', (event) => {
-            const cellNode = event.target;
-            const x = cellNode.attributes['data-xpos'].value;
-            const y = cellNode.attributes['data-ypos'].value;
-            
-            // Register click with Business Logic
-            const clickOutcome = game.clickCell([y, x]);
-            // Update board state
-            board = game.board;
-            // Fetch cell data 
-            const cellData = board[y][x];
-            // Check visibility of cell
-            if (!cellData.hidden) cellNode.innerHTML = cellData.display;
-        })
+    cellNodes.forEach(cellNode => {
+        cellNode.addEventListener('click', handleClick);
     })
 });

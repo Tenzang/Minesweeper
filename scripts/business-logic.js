@@ -98,11 +98,12 @@ class Minesweeper {
 
             return { gameOver: gameOver, gameWon: gameWon };
         };
+
+        this.cascadeReveal = () => {
+            console.log('cascade!');
+        };
     }
-
-
 }
 
 // Testing
-
 const game = new Minesweeper(10);
