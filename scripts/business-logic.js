@@ -1,5 +1,5 @@
 class Minesweeper {
-    constructor(size) {
+    constructor(gridSize) {
 
         this.difficulty = 3.5;
 
@@ -12,13 +12,13 @@ class Minesweeper {
         }
 
         // generates board with mines randomly placed inside
-        this.setBoard = size => {
+        this.setBoard = gridSize => {
             // create empty board array
             const board = Array();
-            for (let i = 0; i < size; i++) {
+            for (let i = 0; i < gridSize; i++) {
                 // create empty row array
                 const row = Array();
-                for (let j = 0; j < size; j++) {
+                for (let j = 0; j < gridSize; j++) {
                     // Create new cell
                     const cell = {display: 0, hidden: true, flagged: false}
                     
@@ -35,20 +35,20 @@ class Minesweeper {
 
             // Update cell displays
             // Loop through each cell
-            for (let y = 0; y < size; y++) {
-                for (let x = 0; x < size; x++) {
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
                     // If cell contains mine, add 1 to the display of surrounding cell
                     if (board[y][x].mine) {
 
                         for (let i = -1; i < 2; i++) {
 
                             // If coordinate is in bounds of grid
-                            if (x + i >= 0 && x + i < size) {
+                            if (x + i >= 0 && x + i < gridSize) {
 
                                 for (let j = -1; j < 2; j++) {
 
                                     // If coordinate is in bounds of grid
-                                    if (y + j >= 0 && y + j < size) {
+                                    if (y + j >= 0 && y + j < gridSize) {
 
                                         // Only add if not the cell being referenced
                                         if (i || j) {
@@ -70,7 +70,7 @@ class Minesweeper {
             return board;
         }
 
-        this.board = this.setBoard(size);
+        this.board = this.setBoard(gridSize);
 
         // clickCell takes array of coordinates and whether the user is flagging
         this.clickCell = ([y, x], flagging = false) => {
@@ -105,5 +105,4 @@ class Minesweeper {
 
 // Testing
 
-const game = new Minesweeper(5);
-debugger
+const game = new Minesweeper(10);

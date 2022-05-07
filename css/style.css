@@ -1,0 +1,11 @@
+.board {
+    display: grid;
+    grid: repeat(10, 2em) / auto-flow 2em;
+}
+
+.cell {
+    text-align: center;
+    border: 1px solid black;
+    width: 2em;
+    height: 2em;
+}
