@@ -1,7 +1,7 @@
 class Minesweeper {
     constructor(gridSize) {
 
-        this.difficulty = 3.5;
+        this.difficulty = 2.5;
 
         this.state = {
             mines: {
@@ -92,15 +92,42 @@ class Minesweeper {
             } else if (!cellClicked.flagged) {
                 // Reveal cell
                 cellClicked.hidden = false;
+                // Cascade if cell has a display value of 0
+                if (cellClicked.display === 0) {
+                    this.cascadeReveal(parseInt(x), parseInt(y));
                 // Game-over if mine present
-                if (cellClicked.mine) gameOver = true;
+                } else if (cellClicked.mine) gameOver = true;
             }
 
             return { gameOver: gameOver, gameWon: gameWon };
         };
 
-        this.cascadeReveal = () => {
-            console.log('cascade!');
+        this.cascadeReveal = (x, y) => {
+            for (let i = -1; i < 2; i++) {
+
+                // If coordinate is in bounds of grid
+                if (x + i >= 0 && x + i < gridSize) {
+
+                    for (let j = -1; j < 2; j++) {
+
+                        // If coordinate is in bounds of grid
+                        if (y + j >= 0 && y + j < gridSize) {
+
+                            const cell = this.board[y+j][x+i];
+                            // If cell hidden and has a display value of 0, click cell
+                            if (cell.hidden) {
+                                console.log("cascading onto cell: ", x, ",", y);
+                                this.clickCell([y+j, x+i]);
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
         };
     }
 }

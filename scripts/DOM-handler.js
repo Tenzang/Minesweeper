@@ -35,20 +35,13 @@ window.addEventListener('DOMContentLoaded', () => {
         // Register click with Business Logic
         const clickOutcome = game.clickCell([y, x], flagMode);
         // Update board state
-        const board = game.board;
+        const boardData = game.board;
         // Fetch cell data 
-        const cellData = board[y][x];
+        const cellData = boardData[y][x];
         // Plant/remove flags if in flag mode
         if (flagMode) {
             cellNode.innerText = cellData.flagged ? 'X' : '';  
-        } else if (!cellData.flagged) { // If cell not flagged
-            // If mine present, display mine symbol
-            if (cellData.mine) {
-                cellNode.innerText = '!';
-            } else { // If not, display cells number
-                cellNode.innerHTML = cellData.display;
-            }
-        }
+        } else refreshCells(boardData);
 
         // End game conditions
         if (clickOutcome.gameOver) {
@@ -67,5 +60,17 @@ window.addEventListener('DOMContentLoaded', () => {
     cellNodes.forEach(cellNode => {
         cellNode.addEventListener('click', handleClick);
     })
+
+    const refreshCells = (boardData) => {
+        cellNodes.forEach( cellNode => {
+            const x = cellNode.attributes['data-xpos'].value;
+            const y = cellNode.attributes['data-ypos'].value;
+            const {hidden, display, mine} = boardData[y][x]
+
+            if (!hidden) {
+                cellNode.innerText = mine ? '!' : display
+            };
+        })
+    }
 
 });
