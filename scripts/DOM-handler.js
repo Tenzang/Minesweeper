@@ -1,19 +1,19 @@
-// harcoded for testing, will eventually take user input
-let gridSize = 10; // grid will be gridSize * gridSize
-
-// Creates cell with coordinates as classes
-const createCell = (x, y) => {
-    const cell = document.createElement('div');
-    cell.classList.add('cell');
-    cell.setAttribute('data-xpos', x);
-    cell.setAttribute('data-ypos', y);
-    return cell;
-}
-
-window.addEventListener('DOMContentLoaded', () => {
+const loadMinesweeper = () => {
+    // harcoded for testing, will eventually take user input
+    let gridSize = 10; // grid will be gridSize * gridSize
     
+    // Creates cell with coordinates as classes
+    const createCell = (x, y) => {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.setAttribute('data-xpos', x);
+        cell.setAttribute('data-ypos', y);
+        return cell;
+    }
+
     // Find the 'board' node
     const boardDisplay = document.querySelector('.board');
+
     // Set up grid
     for (let y = 0; y < gridSize; y++) {
         for(let x = 0; x < gridSize; x++) {
@@ -21,10 +21,16 @@ window.addEventListener('DOMContentLoaded', () => {
             boardDisplay.appendChild(createCell(x, y));
         }
     }
+    // Generate Flag Mode tick box
+    const flagButton = document.createElement('input');
+    flagButton.classList.add('flag');
+    flagButton.setAttribute('type', 'checkbox');
+    flagButton.textContent("Flag Button");
+    boardDisplay.after(flagButton);
+
     // Flag button event listener
     let flagMode = false;
     const toggleFlagMode = () => flagMode = !flagMode;
-    const flagButton = document.querySelector('.flag')
     flagButton.addEventListener('click', toggleFlagMode);
 
     const handleClick = event => {
@@ -73,4 +79,4 @@ window.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-});
+};
