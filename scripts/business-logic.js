@@ -92,11 +92,12 @@ class Minesweeper {
             } else if (!cellClicked.flagged) {
                 // Reveal cell
                 cellClicked.hidden = false;
-                // Cascade if cell has a display value of 0
-                if (cellClicked.display === 0) {
+                if (cellClicked.mine) { // Game-over if mine present
+                    gameOver = true;
+                } else if (cellClicked.display === 0) { 
+                    // Cascade if cell has a display value of 0
                     this.cascadeReveal(parseInt(x), parseInt(y));
-                // Game-over if mine present
-                } else if (cellClicked.mine) gameOver = true;
+                }
             }
 
             return { gameOver: gameOver, gameWon: gameWon };
@@ -116,7 +117,6 @@ class Minesweeper {
                             const cell = this.board[y+j][x+i];
                             // If cell hidden and has a display value of 0, click cell
                             if (cell.hidden) {
-                                console.log("cascading onto cell: ", x, ",", y);
                                 this.clickCell([y+j, x+i]);
                             }
 
