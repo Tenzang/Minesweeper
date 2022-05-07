@@ -20,7 +20,7 @@ class Minesweeper {
                 const row = Array();
                 for (let j = 0; j < size; j++) {
                     // Create new cell
-                    const cell = {hidden: true, flagged: false}
+                    const cell = {display: 0, hidden: true, flagged: false}
                     
                     const randNum = Math.random() * 10 + 1;
                     // Randomly decide whether to plant mine in cell then update mine count accordingly
@@ -31,6 +31,40 @@ class Minesweeper {
                 }
                 // add row to board
                 board.push(row);
+            }
+
+            // Update cell displays
+            // Loop through each cell
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    // If cell contains mine, add 1 to the display of surrounding cell
+                    if (board[y][x].mine) {
+
+                        for (let i = -1; i < 2; i++) {
+
+                            // If coordinate is in bounds of grid
+                            if (x + i >= 0 && x + i < size) {
+
+                                for (let j = -1; j < 2; j++) {
+
+                                    // If coordinate is in bounds of grid
+                                    if (y + j >= 0 && y + j < size) {
+
+                                        // Only add if not the cell being referenced
+                                        if (i || j) {
+                                            board[y+j][x+i].display++;
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                }
             }
 
             return board;
@@ -71,5 +105,5 @@ class Minesweeper {
 
 // Testing
 
-const game = new Minesweeper(1);
+const game = new Minesweeper(5);
 debugger
