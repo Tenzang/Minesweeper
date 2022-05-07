@@ -3,7 +3,7 @@ let gridSize = 10; // grid will be gridSize * gridSize
 
 let board = game.board;
 
-// create cell with coordinates as classes
+// Creates cell with coordinates as classes
 const createCell = (x, y) => {
     const cell = document.createElement('div');
     cell.classList.add('cell');
@@ -13,6 +13,7 @@ const createCell = (x, y) => {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+
     // Find the 'board' node
     const boardDisplay = document.querySelector('.board');
     // Set up grid
@@ -60,4 +61,5 @@ window.addEventListener('DOMContentLoaded', () => {
     cellNodes.forEach(cellNode => {
         cellNode.addEventListener('click', handleClick);
     })
+    
 });
