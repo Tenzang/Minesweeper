@@ -1,8 +1,6 @@
 // harcoded for testing, will eventually take user input
 let gridSize = 10; // grid will be gridSize * gridSize
 
-let board = game.board;
-
 // Creates cell with coordinates as classes
 const createCell = (x, y) => {
     const cell = document.createElement('div');
@@ -13,7 +11,7 @@ const createCell = (x, y) => {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-
+    
     // Find the 'board' node
     const boardDisplay = document.querySelector('.board');
     // Set up grid
@@ -23,6 +21,11 @@ window.addEventListener('DOMContentLoaded', () => {
             boardDisplay.appendChild(createCell(x, y));
         }
     }
+    // Flag button event listener
+    let flagMode = false;
+    const toggleFlagMode = () => flagMode = !flagMode;
+    const flagButton = document.querySelector('.flag')
+    flagButton.addEventListener('click', toggleFlagMode);
 
     const handleClick = event => {
         const cellNode = event.target;
@@ -30,13 +33,15 @@ window.addEventListener('DOMContentLoaded', () => {
         const y = cellNode.attributes['data-ypos'].value;
         
         // Register click with Business Logic
-        const clickOutcome = game.clickCell([y, x]);
+        const clickOutcome = game.clickCell([y, x], flagMode);
         // Update board state
-        board = game.board;
+        const board = game.board;
         // Fetch cell data 
         const cellData = board[y][x];
-        // If cell not flagged
-        if (!cellData.flagged) {
+        // Plant/remove flags if in flag mode
+        if (flagMode) {
+            cellNode.innerText = cellData.flagged ? 'X' : '';  
+        } else if (!cellData.flagged) { // If cell not flagged
             // If mine present, display mine symbol
             if (cellData.mine) {
                 cellNode.innerText = '!';
@@ -50,7 +55,8 @@ window.addEventListener('DOMContentLoaded', () => {
             cellNodes.forEach( node => {
                 node.removeEventListener('click', handleClick);
             })    
-            console.log("You lose!");
+            flagButton.removeEventListener('click', toggleFlagMode);
+            document.querySelector('.announcement').innerText = "You lose!";
         } else {
             if (clickOutcome.gameWon) console.log("You win!");
         }
@@ -61,5 +67,5 @@ window.addEventListener('DOMContentLoaded', () => {
     cellNodes.forEach(cellNode => {
         cellNode.addEventListener('click', handleClick);
     })
-    
+
 });
