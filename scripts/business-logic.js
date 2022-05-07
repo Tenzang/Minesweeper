@@ -12,7 +12,7 @@ class Minesweeper {
                 const row = Array();
                 for (let j = 0; j < size; j++) {
                     // randomly decide whether to add mine to cell
-                    const cell = {hidden: true}
+                    const cell = {hidden: true, flagged: false}
                     
                     const randNum = Math.random() * 10 + 1;
                     cell.mine = randNum > this.difficulty ? false : true;
@@ -27,11 +27,18 @@ class Minesweeper {
 
         this.board = this.setBoard(size);
 
-        this.clickCell = (y, x) => {
+        // clickCell takes array of coordinates and whether the user is flagging
+        this.clickCell = ([y, x], flagging = false) => {
             const cellClicked = this.board[y][x];
-            cellClicked.hidden = false;
+            let gameOver = false;
+            if (flagging) {
+                cellClicked.flagged = !cellClicked.flagged; 
+            } else if (!cellClicked.flagged) {
+                cellClicked.hidden = false;
+                if (cellClicked.mine) gameOver = true;
+            }
 
-            return {gameOver: cellClicked.mine};
+            return { gameOver: gameOver };
         };
     }
 
