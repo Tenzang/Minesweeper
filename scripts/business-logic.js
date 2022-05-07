@@ -31,7 +31,7 @@ class Minesweeper {
             const cellClicked = this.board[y][x];
             cellClicked.hidden = false;
 
-            return {y: y, x: x, gameOver: cellClicked.mine};
+            return {gameOver: cellClicked.mine};
         };
     }
 
