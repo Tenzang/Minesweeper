@@ -3,6 +3,14 @@ class Minesweeper {
 
         this.difficulty = 3.5;
 
+        this.state = {
+            mines: {
+                present: 0,
+                flagged: 0
+            },
+            cellsFlagged: 0
+        }
+
         // generates board with mines randomly placed inside
         this.setBoard = size => {
             // create empty board array
@@ -11,11 +19,14 @@ class Minesweeper {
                 // create empty row array
                 const row = Array();
                 for (let j = 0; j < size; j++) {
-                    // randomly decide whether to add mine to cell
+                    // Create new cell
                     const cell = {hidden: true, flagged: false}
                     
                     const randNum = Math.random() * 10 + 1;
-                    cell.mine = randNum > this.difficulty ? false : true;
+                    // Randomly decide whether to plant mine in cell then update mine count accordingly
+                    if (cell.mine = randNum > this.difficulty ? false : true) this.state.mines.present++;
+
+                    // Add cell to row
                     row.push(cell);
                 }
                 // add row to board
@@ -30,17 +41,35 @@ class Minesweeper {
         // clickCell takes array of coordinates and whether the user is flagging
         this.clickCell = ([y, x], flagging = false) => {
             const cellClicked = this.board[y][x];
+            const { state } = this;
+            const { mines } = state;
+
             let gameOver = false;
-            if (flagging) {
-                cellClicked.flagged = !cellClicked.flagged; 
+            let gameWon = false;
+
+            if (flagging && cellClicked.hidden) {
+                // Simultaneously sets flagged status of cell and updates flagged cell count 
+                (cellClicked.flagged = !cellClicked.flagged) ? state.cellsFlagged++ : state.cellsFlagged--;
+                // If theres mine on cell clicked then update mines flagged according
+                if (cellClicked.mine) cellClicked.flagged ? mines.flagged++ : mines.flagged--;
+
+                // Game has been won when all mines are flagged
+                if (mines.flagged === mines.present) gameWon = true; 
             } else if (!cellClicked.flagged) {
+                // Reveal cell
                 cellClicked.hidden = false;
+                // Game-over if mine present
                 if (cellClicked.mine) gameOver = true;
             }
 
-            return { gameOver: gameOver };
+            return { gameOver: gameOver, gameWon: gameWon };
         };
     }
 
 
 }
+
+// Testing
+
+const game = new Minesweeper(1);
+debugger
