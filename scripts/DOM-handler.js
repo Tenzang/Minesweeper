@@ -25,8 +25,8 @@ const loadMinesweeper = () => {
     const flagButton = document.createElement('input');
     flagButton.classList.add('flag');
     flagButton.setAttribute('type', 'checkbox');
-    flagButton.textContent("Flag Button");
     boardDisplay.after(flagButton);
+    flagButton.after("Flag Mode");
 
     // Flag button event listener
     let flagMode = false;
