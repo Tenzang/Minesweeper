@@ -1,7 +1,7 @@
 class Minesweeper {
-    constructor(gridSize) {
+    constructor(gridSize, difficulty = 2.5) {
 
-        this.difficulty = 2.5;
+        this.difficulty = difficulty;
 
         this.state = {
             mines: {

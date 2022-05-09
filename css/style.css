@@ -1,6 +1,6 @@
 .board {
     display: grid;
-    grid: repeat(10, 2em) / auto-flow 2em;
+    grid: repeat(10, 2.1em) / auto-flow 2.1em;
 }
 
 .cell {

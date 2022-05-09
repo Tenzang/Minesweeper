@@ -6,6 +6,7 @@
     <title>Minesweeper</title>
     <script src="scripts/business-logic.js"></script>
     <script src="scripts/DOM-handler.js"></script>
+    <script src="scripts/game-manager.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,34 +14,32 @@
         <!-- WELCOME SCREEN WITH MENU -->
         <h1>Welcome to Retro Arcade</h1>
         <h3>Select a Game:</h3>
-        <form>
             <input type="radio" name="game" id="minesweeper" value="minesweeper">
             <label for="minesweeper">Minesweeper</label>
             <input type="radio" name="game" id="#" value="###">
             <label for="#">More Games Coming</label>
             <input type="radio" name="game" id="#" value="###">
             <label for="#">More Games Coming</label>
-        </form>
         <!-- GRID SIZE -->
         <h3>Grid size:</h3>
-        <input type="number" value=10>
+        <input type="number" name="grid-size" value=10>
+        <label for="grid-size">(number x number)</label>
         <!-- DIFFICULTY -->
         <h3>Select your difficulty:</h3>
         <form>
-            <input type="radio" name="difficulty" id="easy" value="0.25">
+            <input type="radio" name="difficulty" id="easy" value="2.5">
             <label for="easy">easy</label>
-            <input type="radio" name="difficulty" id="medium" value="0.35">
+            <input type="radio" name="difficulty" id="medium" value="3.5">
             <label for="medium">medium</label>
-            <input type="radio" name="difficulty" id="hard" value="0.45">
+            <input type="radio" name="difficulty" id="hard" value="4.5">
             <label for="hard">hard</label>
         </form>    
         <!-- START GAME -->
         <button id="launchgame">Play Game</button>
-        <div class="board"></div>
-        <div class="announcement"></div>
         <!-- RESTART GAME BUTTON -->
         <!-- BACK TO MENU BUTTON -->
-
+        
     </div>
+    <div class="announcement"></div>
 </body>
 </html>

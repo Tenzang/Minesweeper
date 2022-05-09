@@ -1,7 +1,12 @@
-const loadMinesweeper = () => {
-    // harcoded for testing, will eventually take user input
-    let gridSize = 10; // grid will be gridSize * gridSize
+const loadMinesweeper = (gridSize, difficulty) => {
+    console.log("loading minesweeper");
+
+    // Place game board node
+    const boardDisplay = document.createElement('div');
+    boardDisplay.classList.add('board');
+    document.querySelector('.screen').appendChild(boardDisplay);
     
+    const game = new Minesweeper(gridSize, difficulty);
     // Creates cell with coordinates as classes
     const createCell = (x, y) => {
         const cell = document.createElement('div');
@@ -10,9 +15,6 @@ const loadMinesweeper = () => {
         cell.setAttribute('data-ypos', y);
         return cell;
     }
-
-    // Find the 'board' node
-    const boardDisplay = document.querySelector('.board');
 
     // Set up grid
     for (let y = 0; y < gridSize; y++) {
