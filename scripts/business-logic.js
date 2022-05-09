@@ -93,6 +93,7 @@ class Minesweeper {
                 // Reveal cell
                 cellClicked.hidden = false;
                 if (cellClicked.mine) { // Game-over if mine present
+                    this.revealMines();
                     gameOver = true;
                 } else if (cellClicked.display === 0) { 
                     // Cascade if cell has a display value of 0
@@ -129,6 +130,16 @@ class Minesweeper {
             }
 
         };
+
+        this.revealMines = () => {
+            // Iterate through board and reveal cell if mine present
+            for (let y = 0; y < gridSize; y++) {
+                for (let x = 0; x < gridSize; x++) {
+                    const cell = this.board[y][x];
+                    if (cell.mine) cell.hidden = false;
+                }
+            }
+        }
     }
 }
 
