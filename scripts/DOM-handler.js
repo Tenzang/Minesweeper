@@ -59,7 +59,9 @@ const loadMinesweeper = (gridSize, difficulty) => {
             flagButton.removeEventListener('click', toggleFlagMode);
             document.querySelector('.announcement').innerText = "You lose!";
         } else {
-            if (clickOutcome.gameWon) console.log("You win!");
+            if (clickOutcome.gameWon) {
+                document.querySelector('.announcement').innerText = "You in!";
+            }
         }
     }
 

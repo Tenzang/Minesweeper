@@ -1,5 +1,5 @@
 class Minesweeper {
-    constructor(gridSize, difficulty = 2.5) {
+    constructor(gridSize, difficulty) {
 
         this.difficulty = difficulty;
 

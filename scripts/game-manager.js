@@ -8,10 +8,9 @@ const loadMenu = () => {
         console.log("game chosen: ", game);
         if (game === "minesweeper") {
             // Fetch difficulty
-            const difficulty = document.querySelector("input[name='difficulty']").value;
-            console.log("difficulty chosen:", difficulty);
+            const difficulty = document.querySelector('#difficulty').elements['difficulty'].value;
             // Fetch grid Size
-            const gridSize = document.querySelector("input[name='grid-size']").value;
+            const gridSize = document.querySelector('#grid-size').value;
             console.log("gridsize chosen:", gridSize);
             clearScreen();
             loadMinesweeper(gridSize, difficulty);
